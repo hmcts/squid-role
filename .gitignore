@@ -1,0 +1,6 @@
+.molecule
+*__py*
+*.swp
+*.swo
+*.DS_Store
+.pytest_cache

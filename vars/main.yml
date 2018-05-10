@@ -1,0 +1,9 @@
+squid3_package: squid
+squid3_daemon: squid
+squid3_path: /etc/squid
+squid3_conf: /etc/squid/squid.conf
+
+squid3_diskcache: ''
+#squid3_diskcache: '' # Disables cache
+
+squid3_coredumpdir: '/var/spool/squid'

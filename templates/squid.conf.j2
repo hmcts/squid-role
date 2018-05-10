@@ -1,0 +1,57 @@
+# Managed by Ansible.
+
+{% if squid3_localnets is defined %}
+{% for localnet in squid3_localnets %}
+acl localnet src {{ localnet }}
+{% endfor %}
+{% endif %}
+
+# For SSL CONNECT requests.
+{% for sslports in squid3_sslports %}
+acl SSL_ports port {{ sslports }}
+{% endfor %}
+
+{% if squid3_custom_sslports is defined %}
+{% for sslports in squid3_custom_sslports %}
+acl SSL_ports port {{ sslports }}
+{% endfor %}
+{% endif %}
+
+# For all requests.
+{% for safeports in squid3_safeports %}
+acl Safe_ports port {{ safeports }}
+{% endfor %}
+
+{% if squid3_custom_safeports is defined %}
+{% for safeports in squid3_custom_safeports %}
+acl Safe_ports port {{ safeports }}
+{% endfor %}
+{% endif %}
+
+# ACL definitions for each environment.
+{% for acl in squid3_acls %}
+acl {{ acl.name }} {{ acl.type }} {{ acl.arg }}
+{% endfor %}
+
+# Actual ACL assignment to ranges etc.
+{% for http_access in squid3_http_access %}
+http_access {{ http_access.perm }} {{ http_access.aclname }}
+{% endfor %}
+
+http_port {{ squid3_port }}
+
+{% if squid3_diskcache %}
+cache_dir {{ squid3_diskcache }}
+{% endif %}
+
+{% if squid3_coredumpdir %}
+coredump_dir {{ squid3_coredumpdir }}
+{% endif %}
+
+{% if squid3_outgoing_address is defined %}
+tcp_outgoing_address {{ squid3_outgoing_address }}
+{% endif %}
+
+{% if squid3_visible_hostname %}
+visible_hostname {{ squid3_visible_hostname }}
+{% endif %}

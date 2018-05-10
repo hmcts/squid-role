@@ -1,0 +1,19 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+docker:
+  containers:
+    - name: squid-role
+      image: centos/systemd
+      image_version: latest
+      build_image: True
+      dockerfile: tests/Dockerfile
+      privileged: True
+      environment:
+        http_proxy: "http://reformmgmtproxyout.reform.hmcts.net:8080/"
+verifier:
+  name: testinfra
+ansible:
+  extra_vars: squid3_test_urls="['http://www.google.com','http://www.yahoo.com']"

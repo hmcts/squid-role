@@ -1,0 +1,40 @@
+---
+squid3_sslports:
+  - 443
+
+squid3_safeports:
+  - 443
+  - 80
+
+squid3_port: 8080
+#squid3_outgoing_adress: ''
+squid3_visible_hostname: 'proxyout.mydomain.com'
+
+squid3_acls:
+  ### default ###
+  - { name: 'CONNECT', type: 'method', arg: 'CONNECT' }
+  ### default ###
+
+squid3_http_access:
+  ### default ###
+  - { perm: 'deny', aclname: '!Safe_ports' }
+  - { perm: 'deny', aclname: 'CONNECT !SSL_ports' }
+  - { perm: 'allow', aclname: 'localhost manager' }
+  - { perm: 'deny', aclname: 'manager' }
+  - { perm: 'deny', aclname: 'all' }
+    #- { perm: 'allow', aclname: 'localnet' }
+    #- { perm: 'allow', aclname: 'localhost' }
+  ### default ###
+squid3_prod_urls:
+  - "my.production.site1.com"
+  - "my.production.site2.com"
+
+
+# dev urls automatically include prod_urls, so these are just ones that are needed in addition to prod_urls
+squid3_dev_urls:
+  - "my.dev.site1.com"
+  - "my.dev.site2.com"
+
+squid3_test_urls:
+  - "https://my.production.site1.com/health"
+  - "https://my.production.site2.com/health"

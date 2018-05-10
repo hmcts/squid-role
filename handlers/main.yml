@@ -1,0 +1,6 @@
+---
+- name: verify squid config
+  command: squid -k parse -d0
+
+- name: restart squid3
+  service: name={{ squid3_daemon }} state=restarted enabled=yes

@@ -1,0 +1,41 @@
+---
+- name: install squid3
+  yum:
+    name: "{{ squid3_package }}"
+    state: present
+    update_cache: yes
+
+- name: process url whitelist template
+  template:
+    src: urls.txt.j2
+    dest: /etc/squid/{{ item.name }}-urls.txt
+    group: root
+    mode: 0644
+    backup: yes
+  with_items:
+    - { name: 'dev', whitelist: "{{ squid3_dev_urls }} + {{ squid3_prod_urls }}" }
+    - { name: 'prod', whitelist: "{{ squid3_prod_urls }}" }
+  notify:
+    - verify squid config
+    - restart squid3
+
+- name: copy template
+  template:
+    src: squid.conf.j2
+    dest: "{{ squid3_conf }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - verify squid config
+    - restart squid3
+
+- meta: flush_handlers
+
+- name: verify our list of test urls locally
+  local_action: get_url url={{ item }} dest=/tmp/
+  with_items: "{{ squid3_test_urls }}"
+  become: no
+  changed_when: false
+  use_proxy: yes

@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Jonatas Baldin
+  description: Squid3 for RedHat/CentOS
+  company: deployeveryday.com
+
+  license: MIT
+
+  min_ansible_version: 1.8
+
+  platforms:
+  - name: EL
+    versions:
+    - all
+
+  galaxy_tags:
+    - system
+    - proxy
+
+dependencies: []
