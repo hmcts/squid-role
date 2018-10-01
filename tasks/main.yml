@@ -15,6 +15,7 @@
   with_items:
     - { name: 'dev', whitelist: "{{ squid3_dev_urls }} + {{ squid3_prod_urls }}" }
     - { name: 'prod', whitelist: "{{ squid3_prod_urls }}" }
+    - { name: 'perf', whitelist: "{{ squid3_performancetesting_urls }}" }
   notify:
     - verify squid config
     - restart squid3
