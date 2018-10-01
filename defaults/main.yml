@@ -35,6 +35,9 @@ squid3_dev_urls:
   - "my.dev.site1.com"
   - "my.dev.site2.com"
 
+squid3_performancetesting_urls: 
+  - "my.perfomancetesting.site1.com"
+  
 squid3_test_urls:
   - "https://my.production.site1.com/health"
   - "https://my.production.site2.com/health"
