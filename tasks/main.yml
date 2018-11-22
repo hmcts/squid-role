@@ -39,4 +39,3 @@
   with_items: "{{ squid3_test_urls }}"
   become: no
   changed_when: false
-  use_proxy: yes
